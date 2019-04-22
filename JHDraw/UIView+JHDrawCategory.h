@@ -29,6 +29,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, CAGradientLayerDirection) {
+    CAGradientLayerDirection_FromLeftToRight,           // 从左到右
+    CAGradientLayerDirection_FromTopToBottom,           // 从上到下
+    CAGradientLayerDirection_FromTopLeftToBottomRight,  // 从左上到右下
+    CAGradientLayerDirection_FromTopRightToBottomLeft,  // 从右上到左下
+    CAGradientLayerDirection_FromCenterToEdge,          // 从中心向四周
+};
+
 @interface UIView (JHDrawCategory)
 
 /// draw line in view.
@@ -60,5 +68,11 @@
            lineType:(NSInteger)type
              isDash:(BOOL)dash
           lineSpace:(CGFloat)space;
+
+/// gradient layer with direction.
+- (CALayer *)jh_gradientLayer:(CGRect)rect
+                        color:(NSArray <UIColor *>*)colors
+                     location:(NSArray <NSNumber *> *)locations
+                    direction:(CAGradientLayerDirection)direction;
 
 @end
