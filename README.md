@@ -10,3 +10,13 @@ draw line, draw dash line, draw star, draw rect, draw dash rect, gradientLayer
 ![image](https://github.com/xjh093/JHDraw/blob/master/image1.png)
 
 ---
+
+# Logs
+### 2019-04-22
+1.gradientLayer.
+
+### 2018-12-12
+1.upload.
+
+
+---
