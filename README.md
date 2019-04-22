@@ -7,4 +7,6 @@ draw line, draw dash line, draw star, draw rect, draw dash rect
 # What
 ![image](https://github.com/xjh093/JHDraw/blob/master/image.png)
 
+![image](https://github.com/xjh093/JHDraw/blob/master/image1.png)
+
 ---
