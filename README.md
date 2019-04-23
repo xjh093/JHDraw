@@ -9,9 +9,16 @@ draw line, draw dash line, draw star, draw rect, draw dash rect, gradientLayer
 
 ![image](https://github.com/xjh093/JHDraw/blob/master/image1.png)
 
+iOS 12:
+
+![image](https://github.com/xjh093/JHDraw/blob/master/image2.png)
+
 ---
 
 # Logs
+### 2019-04-23
+1.gradientLayer in iOS 12.
+
 ### 2019-04-22
 1.gradientLayer.
 
