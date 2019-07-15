@@ -75,4 +75,41 @@ typedef NS_ENUM(NSUInteger, CAGradientLayerDirection) {
                      location:(NSArray <NSNumber *> *)locations
                     direction:(CAGradientLayerDirection)direction;
 
+- (CALayer *)jh_gradientLayer:(CGRect)rect
+                        color:(NSArray <UIColor *>*)colors
+                   startPoint:(CGPoint)startPoint
+                     endPoint:(CGPoint)endPoint
+                     location:(NSArray <NSNumber *> *)locations
+                         type:(NSInteger)type;
+
+/// draw oval. type: 0 - cube, 1 - round
+- (void)jh_drawOval:(CGRect)rect
+          lineColor:(UIColor *)color
+          lineWidth:(CGFloat)width
+         lineHeight:(CGFloat)height
+           lineType:(NSInteger)type
+             isDash:(BOOL)dash
+          lineSpace:(CGFloat)space;
+
+/// draw round rect. type: 0 - cube, 1 - round
+- (void)jh_drawRoundRect:(CGRect)rect
+               lineColor:(UIColor *)color
+               lineWidth:(CGFloat)width
+              lineHeight:(CGFloat)height
+                lineType:(NSInteger)type
+                  isDash:(BOOL)dash
+               lineSpace:(CGFloat)space
+                  radius:(CGFloat)radius;
+
+/// draw round rect. type: 0 - cube, 1 - round
+- (void)jh_drawRoundRect:(CGRect)rect
+         roundingCorners:(UIRectCorner)corners
+               lineColor:(UIColor *)color
+               lineWidth:(CGFloat)width
+              lineHeight:(CGFloat)height
+                lineType:(NSInteger)type
+                  isDash:(BOOL)dash
+               lineSpace:(CGFloat)space
+                  radius:(CGFloat)radius;
+
 @end
