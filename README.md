@@ -13,9 +13,15 @@ iOS 12:
 
 ![image](https://github.com/xjh093/JHDraw/blob/master/image2.png)
 
+![image](https://github.com/xjh093/JHDraw/blob/master/image3.png)
+
 ---
 
 # Logs
+
+### 2019-07-15
+1.oval & round rect.
+
 ### 2019-04-23
 1.gradientLayer in iOS 12.
 
