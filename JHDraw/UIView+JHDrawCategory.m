@@ -87,6 +87,7 @@
     [self.layer addSublayer:shapeLayer];
 }
 
+//画五角星 - draw pentagram
 - (void)jh_drawPentagram:(CGPoint)center
                   radius:(CGFloat)radius
                    color:(UIColor *)color
@@ -135,28 +136,16 @@
              isDash:(BOOL)dash
           lineSpace:(CGFloat)space
 {
-    CAShapeLayer* shapeLayer = [CAShapeLayer layer];
-    shapeLayer.strokeColor = [UIColor lightGrayColor].CGColor;
-    if (color) {
-        shapeLayer.strokeColor = color.CGColor;
-    }
-    shapeLayer.fillColor = [UIColor clearColor].CGColor;
-    shapeLayer.path = [UIBezierPath bezierPathWithRect:rect].CGPath;
-    shapeLayer.lineWidth = height < 0 ? 1 : height;
-    shapeLayer.lineCap = kCALineCapButt;
-    if (type == 1) {
-        shapeLayer.lineCap = kCALineCapRound;
-    }
-    
-    width = width < 0 ? 1 : width;
-    if (dash) {
-        shapeLayer.lineDashPattern = @[@(width),@(space)];
-        if (type == 1) {
-            shapeLayer.lineDashPattern = @[@(width),@(space+width)];
-        }
-    }
-    
-    [self.layer addSublayer:shapeLayer];
+    [self jh_drawInRect:rect
+              lineColor:color
+              lineWidth:width
+             lineHeight:height
+               lineType:type
+                 isDash:dash
+              lineSpace:space
+               pathType:0
+                 radius:0
+                corners:0];
 }
 
 - (CALayer *)jh_gradientLayer:(CGRect)rect
@@ -201,6 +190,159 @@
     
     [self.layer addSublayer:layer];
     return layer;
+}
+
+- (CALayer *)jh_gradientLayer:(CGRect)rect
+                        color:(NSArray <UIColor *>*)colors
+                   startPoint:(CGPoint)startPoint
+                     endPoint:(CGPoint)endPoint
+                     location:(NSArray <NSNumber *> *)locations
+                         type:(NSInteger)type
+{
+    if (colors.count == 0) {
+        return nil;
+    }
+    
+    CAGradientLayer *layer = [CAGradientLayer layer];
+    layer.frame = rect;
+    layer.locations = locations;
+    layer.colors = ({
+        NSMutableArray *marr = @[].mutableCopy;
+        for (UIColor *color in colors) {
+            if ([color isKindOfClass:[UIColor class]]) {
+                [marr addObject:(__bridge id)color.CGColor];
+            }
+        }
+        marr;
+    });
+    
+    layer.startPoint = startPoint;
+    layer.endPoint   = endPoint;
+    
+    if (type == 0) {
+        layer.type = kCAGradientLayerAxial;
+    }else if (type == 1) {
+        layer.type = kCAGradientLayerRadial;
+    }else if (type == 2) {
+        if (@available(iOS 12,*)){
+            layer.type = kCAGradientLayerConic;
+        }
+    }
+    
+    [self.layer addSublayer:layer];
+    return layer;
+}
+
+- (void)jh_drawOval:(CGRect)rect
+          lineColor:(UIColor *)color
+          lineWidth:(CGFloat)width
+         lineHeight:(CGFloat)height
+           lineType:(NSInteger)type
+             isDash:(BOOL)dash
+          lineSpace:(CGFloat)space
+{
+    [self jh_drawInRect:rect
+              lineColor:color
+              lineWidth:width
+             lineHeight:height
+               lineType:type
+                 isDash:dash
+              lineSpace:space
+               pathType:1
+                 radius:0
+                corners:0];
+    
+}
+
+/// draw round rect. type: 0 - cube, 1 - round
+- (void)jh_drawRoundRect:(CGRect)rect
+               lineColor:(UIColor *)color
+               lineWidth:(CGFloat)width
+              lineHeight:(CGFloat)height
+                lineType:(NSInteger)type
+                  isDash:(BOOL)dash
+               lineSpace:(CGFloat)space
+                  radius:(CGFloat)radius
+{
+    [self jh_drawInRect:rect
+              lineColor:color
+              lineWidth:width
+             lineHeight:height
+               lineType:type
+                 isDash:dash
+              lineSpace:space
+               pathType:2
+                 radius:radius
+                corners:0];
+}
+
+- (void)jh_drawRoundRect:(CGRect)rect
+         roundingCorners:(UIRectCorner)corners
+               lineColor:(UIColor *)color
+               lineWidth:(CGFloat)width
+              lineHeight:(CGFloat)height
+                lineType:(NSInteger)type
+                  isDash:(BOOL)dash
+               lineSpace:(CGFloat)space
+                  radius:(CGFloat)radius
+{
+    [self jh_drawInRect:rect
+              lineColor:color
+              lineWidth:width
+             lineHeight:height
+               lineType:type
+                 isDash:dash
+              lineSpace:space
+               pathType:3
+                 radius:radius
+                corners:corners];
+}
+
+- (void)jh_drawInRect:(CGRect)rect
+            lineColor:(UIColor *)color
+            lineWidth:(CGFloat)width
+           lineHeight:(CGFloat)height
+             lineType:(NSInteger)type
+               isDash:(BOOL)dash
+            lineSpace:(CGFloat)space
+             pathType:(NSInteger)pathType
+               radius:(CGFloat)radius
+              corners:(UIRectCorner)corners
+{
+    CAShapeLayer* shapeLayer = [CAShapeLayer layer];
+    shapeLayer.strokeColor = [UIColor lightGrayColor].CGColor;
+    if (color) {
+        shapeLayer.strokeColor = color.CGColor;
+    }
+    shapeLayer.fillColor = [UIColor clearColor].CGColor;
+    shapeLayer.path = ({
+        UIBezierPath *path;
+        if (pathType == 0) {
+            path = [UIBezierPath bezierPathWithRect:rect];
+        }else if (pathType == 1) {
+            path = [UIBezierPath bezierPathWithOvalInRect:rect];
+        }else if (pathType == 2) {
+            path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:radius];
+        }else if (pathType == 3) {
+            path = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:CGSizeMake(radius, radius)];
+        }
+        path.CGPath;
+    });
+    shapeLayer.lineWidth = height < 0 ? 1 : height;
+    shapeLayer.lineCap = kCALineCapButt;
+    if (type == 1) {
+        shapeLayer.lineCap = kCALineCapRound;
+    }
+    
+    width = width < 0 ? 1 : width;
+    if (dash) {
+        shapeLayer.lineDashPattern = @[@(width),@(space)];
+        if (type == 1) {
+            shapeLayer.lineDashPattern = @[@(width),@(space+width)];
+        }
+    }
+    
+    [self.layer addSublayer:shapeLayer];
 }
 
 @end
