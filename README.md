@@ -15,6 +15,20 @@ iOS 12:
 
 ![image](https://github.com/xjh093/JHDraw/blob/master/image3.png)
 
+more:
+
+![image](https://github.com/xjh093/GIF/blob/master/gif/May-13-2020%2010-44-54.gif)
+
+![image](https://github.com/xjh093/GIF/blob/master/gif/May-13-2020%2010-43-46.gif)
+
+if you want this
+
+layer1.mask = layer2;
+
+layer1: gradientLayer
+
+layer2: round rect
+
 ---
 
 # Logs
