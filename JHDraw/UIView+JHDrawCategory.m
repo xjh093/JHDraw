@@ -314,9 +314,12 @@
     if (color) {
         shapeLayer.strokeColor = color.CGColor;
     }
+    
     shapeLayer.fillColor = [UIColor clearColor].CGColor;
     shapeLayer.path = ({
         UIBezierPath *path;
+        rect.origin.x = 0;
+        rect.origin.y = 0;
         if (pathType == 0) {
             path = [UIBezierPath bezierPathWithRect:rect];
         }else if (pathType == 1) {
