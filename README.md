@@ -33,6 +33,9 @@ layer2: round rect
 
 # Logs
 
+### 2020-07-03
+1.fix a little bug.
+
 ### 2019-07-15
 1.oval & round rect.
 
